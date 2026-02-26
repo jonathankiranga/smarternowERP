@@ -1,1 +1,4 @@
 vendor/
+vendor/
+calendar/client_secret.json
+vendor/google-services.json
