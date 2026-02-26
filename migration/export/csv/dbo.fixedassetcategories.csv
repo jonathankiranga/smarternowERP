@@ -1,0 +1,8 @@
+﻿"categoryid","categorydescription","costact","depnact","disposalact","accumdepnact","defaultdepnrate","defaultdepntype","Equipment_hired_act","defaultgl_vat_act","vatcategorycode"
+"F001  ","FreeHold Property   ","06Fr00310           ","De00389             ","De00389             ","De00390             ","0.2","1","15Mo00294           ","I 0020400           ","P         "
+"F002  ","Furniture and Fittin","06Fu00380           ","De00389             ","De00389             ","De00393             ","0.2","1","15Mo00294           ","I 0020400           ","P         "
+"L001  ","Lab Euipments       ","06La00320           ","De00389             ","De00389             ","De00395             ","0.2","1","15Mo00294           ","I 0020400           ","V         "
+"M001  ","Motor Vehicles      ","06mo00321           ","De00389             ","De00389             ","De00396             ","0.2","1","15Mo00294           ","I 0020400           ","P         "
+"P001  ","Plant and Machinery ","06Pl00323           ","De00389             ","De00389             ","De00392             ","0.2","1","15Mo00294           ","I 0020400           ","P         "
+"S001  ","Computers and Equipm","06Co00268           ","De00389             ","De00389             ","De00397             ","0.2","1","15Mo00294           ","I 0020400           ","P         "
+"S002  ","Surveillance        ","06Su00322           ","De00389             ","De00389             ","De00394             ","0.2","1","15Mo00294           ","I 0020400           ","P         "

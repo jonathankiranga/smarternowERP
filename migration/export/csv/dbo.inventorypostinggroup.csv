@@ -1,0 +1,5 @@
+﻿"code","defaultgl_sales","defaultgl_purch","defaultgl_vat","balancesheet","vatcategory","wip","stockvariance","productionexpense","CostOfSales","spoilage"
+"default             ","11In00124           ","12Tr00134           ","03Va00121           ","04St0096            ","V","04Wo00123           ","st0010397           ","13Bu00283           ","13mi00330           ","Pr0030403           "
+"kero                ","11In00124           ","12Tr00134           ","03Va00121           ","04Ra173             ","K","04Wo00123           ","st0010397           ","13Bu00283           ","",""
+"novat               ","11In00124           ","12Tr00134           ","03Va00121           ","04St0096            ","x","04Wo00123           ","st0010397           ","13Bu00283           ","13mi00330           ","Pr0030403           "
+"stelllpo            ","14Sc00286           ","13Ge00377           ","03Va00121           ","04St0096            ","V","                    ","st0010397           ","                    ","",""

@@ -1,0 +1,8 @@
+﻿"code","purchaseaccount","creditorsaccount","VATinclusive","IsTaxed"
+"01","12Tr00134           ","We0010399           ","False","False"
+"EMPLOYEE","13Sa00295           ","05Ne00191           ","False","False"
+"General","12Tr00134           ","03Tr00136           ","False","True"
+"inc","12Tr00134           ","03Tr00136           ","True","True"
+"LOANS","12Tr00134           ","03Lo00169           ","False","False"
+"notvat","12Tr00134           ","03Tr00136           ","True","False"
+"welcap","12Tr00134           ","10MA00334           ","True","False"

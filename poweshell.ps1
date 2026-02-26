@@ -1,0 +1,1 @@
+powershell -NoProfile -ExecutionPolicy Bypass -File .\migration\Export-MssqlDataToMySql.ps1 -MssqlServer "(local)" -MssqlDatabase "mozillaerpv2" -MssqlUser "sa" -MssqlPassword "v3ga2019" -MySqlHost "localhost" -MySqlDatabase "mozillaerpv2" -MySqlUser "root" -MySqlPassword "mysqlpassword" -OutputDir ".\migration\export"
