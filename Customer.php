@@ -29,12 +29,14 @@ if(isset($_POST['submit'])){
                 prnMsg('The customer name '.$_POST['customer'].' already exists','warn');
             } else {
                                
+             $ID= Triger_debtors($descript);
+                
             $sql=sprintf("INSERT INTO `debtors`
-           (`contact` ,`creditlimit` ,`customer`  ,`middlen`
+           (itemcode,`contact` ,`creditlimit` ,`customer`  ,`middlen`
            ,`phone` ,`fax` ,`company`,`altcontact`,`email` ,`city` ,`country` 
            ,`inactive` ,`postcode` ,`curr_cod`,`customerposting`,`salesman`) 
-           values ('%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s','%s'  ,'%s'
-           ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' )",
+           values ('%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s','%s'  ,'%s'
+           ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' )",$ID,
             $_POST['contact'] ,$_POST['creditlimit'] ,
             $_POST['customer']  ,$_POST['middlen'],
             $_POST['phone'] ,$_POST['fax'] ,$_POST['company'],

@@ -57,7 +57,7 @@ if(isset($_GET['edit'])){
     echo '<input type="hidden" name="editline" value="' .$_GET['edit']. '" />';
 
     $results = DB_query("SELECT `itemcode`,`capacity`,`tankname`,`CapacityUOM`,`status` "
-            . "FROM `ProductionUnit` where pkey=".$_GET['edit'],$db);
+            . "FROM `ProductionUnit` where `tankname`=".$_GET['edit'],$db);
     
     $rows=DB_fetch_row($results);
     $_POST['itemcode']=$rows[0];
@@ -90,7 +90,6 @@ $sql="select `itemcode`
             ,`UOM`
             ,`CapacityUOM`
             ,`status`
-            ,`pkey` 
             from `ProductionUnit`";
 
 $URL=htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8');
@@ -101,7 +100,7 @@ echo '<div class="container">'
 
 $ResultIndex=DB_query($sql,$db);
 while($row=DB_fetch_array($ResultIndex)){
-    echo sprintf('<tr><td><a href="%s?edit=%s">%s</a></td>',$URL,$row['pkey'],Findstockdetails($row['itemcode']));
+    echo sprintf('<tr><td><a href="%s?edit=%s">%s</a></td>',$URL,$row['tankname'],Findstockdetails($row['itemcode']));
     echo '<td>'.$row['tankname'].'</td>';
     echo '<td>'.number_format($row['capacity'],0).'</td>';
     echo '<td>'.(($row['status']==true)?'ACTIVE':'INACTIVE').'</td></tr>';

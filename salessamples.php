@@ -1,6 +1,5 @@
 <?php
 include('includes/session.inc');
-
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 include('includes/CountriesArray.php');
 include('includes/SQL_CommonFunctions.inc');

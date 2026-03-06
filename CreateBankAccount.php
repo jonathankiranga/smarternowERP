@@ -40,10 +40,13 @@ if(isset($_POST['update'])){
     
 if(isset($_POST['submit'])){
     $sql=sprintf("update `acct` set `direct`=0 where accno='%s'",$_POST['AccountNo']);
- DB_query($sql,$db);
+   DB_query($sql,$db);
+ 
+   $accountcode = Triger_bankaccounts();
  
     $sql=sprintf("INSERT INTO `BankAccounts`
-           (`bankName`
+           (`accountcode`
+           ,`bankName`
            ,`currency`
            ,`AccountNo`
            ,`BranchCode`
@@ -64,11 +67,13 @@ if(isset($_POST['submit'])){
            ,'%s'
            ,'%s'
            ,'%s'
+           ,'%s'
            ,%f
            ,'%s'
            ,'%s'
            ,'%s')",
-            $_POST['bankName']
+            $accountcode
+           ,$_POST['bankName']
            ,$_POST['currency']
            ,$_POST['AccountNo']
            ,$_POST['BranchCode']

@@ -116,7 +116,7 @@ $results=DB_query('select
     stockmaster.`postinggroup`,
     stockmaster.production,
     unitfull.descrip as Fulqty,
-     stockcategory.`categorydescription` as Groups
+     stockcategory.`categorydescription` 
         from stockmaster 
         left join unit unitfull on stockmaster.units=unitfull.code 
         left join stockcategory on stockcategory.`categoryid`=stockmaster.`category`
@@ -127,7 +127,7 @@ $results=DB_query('select
            echo  '<tr>';
            echo sprintf('<td><a href="%s?StockID=%s">%s</a></td>', $thispage, trim($rows['itemcode']),trim($rows['itemcode']));
            echo '<td><b>'.$rows['descrip'].'</b><i>'.$rows['Fulqty'].'</i></td>';
-           echo '<td><b>'.$rows['Groups'].'</b></td>';
+           echo '<td><b>'.$rows['categorydescription'].'</b></td>';
            echo '<td><b>'.$ProductionCategory[$rows['production']].'</b></td>';
         
            echo '<td>'. ($rows['inactive']==true?'YES':"NO").'</td>';

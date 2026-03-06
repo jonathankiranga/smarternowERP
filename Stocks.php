@@ -18,13 +18,16 @@ if(isset($_POST['submit'])){
         $ResultIndex=DB_query($sql,$db);
         if(DB_num_rows($ResultIndex)==0){
             
+           $itemcode = Triger_stockmaster($_POST['descrip']);
+            
            $sql=sprintf("INSERT INTO `stockmaster`
-           (`isstock`,isstock_1 ,isstock_2 ,isstock_3 ,isstock_4 ,isstock_5 ,isstock_6 ,
+           (`itemcode` ,`isstock`,isstock_1 ,isstock_2 ,isstock_3 ,isstock_4 ,isstock_5 ,isstock_6 ,
            `barcode`,`descrip` ,`postinggroup` ,`averagestock`,`reorderlevel`,`eoq` ,
            `category` ,`units` ,`inactive`,`nextserialno` ,`container`,`sellingprice`,production)
      VALUES
-           ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',0,%f ,%f,'%s','%s','%s',1,'%s',%f,'%s')",
-              $_POST['isstock'],$_POST['isstock_1'],
+           ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',0,%f ,%f,'%s','%s','%s',1,'%s',%f,'%s')",
+              $itemcode,$_POST['isstock'],
+               $_POST['isstock_1'],
               $_POST['isstock_2'],
               $_POST['isstock_3'],
               $_POST['isstock_4'],

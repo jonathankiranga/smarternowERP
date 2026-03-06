@@ -1,11 +1,3 @@
--- Auto-generated from SQL Server database [mozillaerpv2]
--- Source server: (local)
--- Generated on: 2026-02-26 13:39:49
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS=0;
-CREATE DATABASE IF NOT EXISTS `mozillaerpv2` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `mozillaerpv2`;
-
 DROP TABLE IF EXISTS `Accountsetup`;
 CREATE TABLE `Accountsetup` (
   `salesfrom` CHAR(10) NOT NULL,
@@ -48,7 +40,8 @@ CREATE TABLE `acct` (
   `oldaccno` CHAR(20) NULL,
   `postinggroup` CHAR(20) NULL,
   `inactive` TINYINT(1) NOT NULL,
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT
+  `PKey` BIGINT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `arpostinggroups`;
@@ -86,7 +79,7 @@ CREATE TABLE `AssetsHeader` (
   `vatinclusive` TINYINT(1) NULL,
   `Dimension_1` CHAR(10) NULL,
   `Dimension_2` CHAR(10) NULL,
-  PRIMARY KEY (`documentno`)
+  PRIMARY KEY (`entryno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `audittrail`;
@@ -114,16 +107,18 @@ CREATE TABLE `BankAccounts` (
   `Fluctuation` CHAR(20) NULL,
   `AcctName` VARCHAR(100) NULL,
   `bankCode` VARCHAR(20) NULL,
-  `swiftcode` VARCHAR(20) NULL
+  `swiftcode` VARCHAR(20) NULL,
+  PRIMARY KEY (`PKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `BankReconciliation`;
 CREATE TABLE `BankReconciliation` (
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
+  `PKey` INT NOT NULL AUTO_INCREMENT,
   `StatementNo` CHAR(10) NULL,
   `bankcode` CHAR(10) NULL,
   `narration` VARCHAR(50) NULL,
-  `amount` DECIMAL(10,2) NULL
+  `amount` DECIMAL(10,2) NULL,
+  PRIMARY KEY (`PKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `BankTransactions`;
@@ -265,10 +260,11 @@ CREATE TABLE `creditors` (
   `age2` DECIMAL(18,4) NULL,
   `age3` DECIMAL(18,4) NULL,
   `age4` DECIMAL(18,4) NULL,
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
+  `pkey` INT NOT NULL AUTO_INCREMENT,
   `saved` TINYINT(1) NULL,
   `supplierposting` VARCHAR(20) NULL,
-  `IsEmployee` TINYINT(1) NULL
+  `IsEmployee` TINYINT(1) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `creditorsledger`;
@@ -300,8 +296,9 @@ CREATE TABLE `creditorsledger` (
   `period` INT NULL,
   `systypes_1` INT NULL,
   `ledger` CHAR(20) NULL,
-  `rowid` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
-  `whtax` TINYINT(1) NULL
+  `rowid` BIGINT NOT NULL AUTO_INCREMENT,
+  `whtax` TINYINT(1) NULL,
+  PRIMARY KEY (`rowid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `currencies`;
@@ -386,11 +383,12 @@ CREATE TABLE `debtors` (
   `age2` DECIMAL(18,4) NULL,
   `age3` DECIMAL(18,4) NULL,
   `age4` DECIMAL(18,4) NULL,
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
+  `pkey` bigint NOT NULL AUTO_INCREMENT,
   `islocal` TINYINT(1) NULL,
   `username` CHAR(20) NULL,
   `customerposting` VARCHAR(20) NULL,
-  `salesman` VARCHAR(10) NULL
+  `salesman` VARCHAR(10) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `debtorsledger`;
@@ -420,7 +418,8 @@ CREATE TABLE `debtorsledger` (
   `vatc` CHAR(2) NULL,
   `pkey` INT NOT NULL AUTO_INCREMENT,
   `systypes_1` INT NULL,
-  `ledger` CHAR(20) NULL
+  `ledger` CHAR(20) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `Dimensions`;
@@ -446,7 +445,7 @@ CREATE TABLE `Discouts` (
   `Rate` FLOAT NOT NULL,
   `QTY` DOUBLE NOT NULL,
   `rowid` INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`Rate`)
+  PRIMARY KEY (`rowid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `emailsettings`;
@@ -494,8 +493,9 @@ CREATE TABLE `EnterbillsLines` (
 
 DROP TABLE IF EXISTS `fellowships`;
 CREATE TABLE `fellowships` (
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
-  `fellowships` VARCHAR(50) NULL
+  `pkey` INT NOT NULL AUTO_INCREMENT,
+  `fellowships` VARCHAR(50) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `FinancialPeriods`;
@@ -578,7 +578,8 @@ CREATE TABLE `FixedAssetsLine` (
   `vatrate` DECIMAL(10,2) NULL,
   `inclusive` TINYINT(1) NULL,
   `UOM` VARCHAR(10) NULL,
-  `shipping` DOUBLE NULL
+  `shipping` DOUBLE NULL,
+  PRIMARY KEY (`entryno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `fixedassettasks`;
@@ -630,7 +631,8 @@ CREATE TABLE `Generalledger` (
   `VATaccountcode` CHAR(20) NULL,
   `VATamount` DECIMAL(10,2) NULL,
   `dimension` CHAR(10) NULL,
-  `dimension2` CHAR(10) NULL
+  `dimension2` CHAR(10) NULL,
+  PRIMARY KEY (`rowid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `geocode_param`;
@@ -755,17 +757,19 @@ CREATE TABLE `Member` (
   `age2` DECIMAL(18,4) NULL,
   `age3` DECIMAL(18,4) NULL,
   `age4` DECIMAL(18,4) NULL,
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
+  `pkey` INT NOT NULL AUTO_INCREMENT,
   `islocal` TINYINT(1) NULL,
   `username` CHAR(20) NULL,
   `customerposting` VARCHAR(20) NULL,
-  `salesman` VARCHAR(10) NULL
+  `salesman` VARCHAR(10) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `naturalElements`;
 CREATE TABLE `naturalElements` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` CHAR(10) NULL
+  `name` CHAR(10) NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `NewActivity`;
@@ -786,7 +790,8 @@ CREATE TABLE `NewActivity` (
   `Sart_time_to` VARCHAR(25) NULL,
   `End_time_from` VARCHAR(25) NULL,
   `End_time_to` VARCHAR(25) NULL,
-  `location` LONGTEXT NULL
+  `location` LONGTEXT NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `NewContacts`;
@@ -811,7 +816,8 @@ CREATE TABLE `NewContacts` (
   `createdby` CHAR(20) NULL,
   `Date_Created` DATETIME NULL,
   `Last_Activity` DATETIME NULL,
-  `pkey` INT NOT NULL AUTO_INCREMENT
+  `pkey` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `PaymentsAllocation`;
@@ -902,7 +908,8 @@ CREATE TABLE `PriceList` (
   `quantity` INT NULL,
   `price` FLOAT NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
-  `container` VARCHAR(20) NULL
+  `container` VARCHAR(20) NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `ProdcutionMasterLine`;
@@ -945,8 +952,9 @@ CREATE TABLE `productionEmployee` (
   `postcode` CHAR(100) NULL,
   `curr_cod` CHAR(10) NULL,
   `curr_rat` DECIMAL(9,5) NULL,
-  `pkey` DECIMAL(10,0) NOT NULL AUTO_INCREMENT,
-  `commissionposting` VARCHAR(20) NULL
+  `pkey` INT NOT NULL AUTO_INCREMENT,
+  `commissionposting` VARCHAR(20) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `productionManager`;
@@ -973,8 +981,9 @@ CREATE TABLE `productionManager` (
   `postcode` CHAR(100) NULL,
   `curr_cod` CHAR(10) NULL,
   `curr_rat` DECIMAL(9,5) NULL,
-  `pkey` DECIMAL(10,0) NOT NULL AUTO_INCREMENT,
-  `commissionposting` VARCHAR(20) NULL
+  `pkey` INT NOT NULL AUTO_INCREMENT,
+  `commissionposting` VARCHAR(20) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `ProductionMaster`;
@@ -1010,9 +1019,8 @@ CREATE TABLE `ProductionUnit` (
   `UOM` CHAR(10) NULL,
   `CapacityUOM` CHAR(10) NULL,
   `units` DOUBLE NULL,
-  `balance` DOUBLE NULL /* computed column in MSSQL */,
+  `balance` DOUBLE NULL,
   `status` TINYINT(1) NULL,
-  `pkey` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`tankname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1042,7 +1050,7 @@ CREATE TABLE `PurchaseHeader` (
   `Dimension_1` CHAR(10) NULL,
   `Dimension_2` CHAR(10) NULL,
   `freight` DOUBLE NULL,
-  PRIMARY KEY (`documentno`)
+  PRIMARY KEY (`entryno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `PurchaseLine`;
@@ -1077,7 +1085,8 @@ CREATE TABLE `PurchaseLine` (
   `QuantityToReceive` DOUBLE NULL,
   `PriceToReceive` DOUBLE NULL,
   `unitofreceivedIn` VARCHAR(20) NULL,
-  `packzizegrn` DOUBLE NULL
+  `packzizegrn` DOUBLE NULL,
+  PRIMARY KEY (`entryno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `receiptheader`;
@@ -1105,144 +1114,9 @@ CREATE TABLE `ReceiptsAllocation` (
   `receiptjournal` CHAR(20) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `reportcolumns`;
-CREATE TABLE `reportcolumns` (
-  `reportid` SMALLINT NOT NULL DEFAULT 0,
-  `colno` SMALLINT NOT NULL DEFAULT 0,
-  `heading1` VARCHAR(15) NOT NULL,
-  `heading2` VARCHAR(15) NULL DEFAULT NULL,
-  `calculation` SMALLINT NOT NULL DEFAULT 0,
-  `periodfrom` SMALLINT NULL DEFAULT NULL,
-  `periodto` SMALLINT NULL DEFAULT NULL,
-  `datatype` VARCHAR(15) NULL DEFAULT NULL,
-  `colnumerator` SMALLINT NULL DEFAULT NULL,
-  `coldenominator` SMALLINT NULL DEFAULT NULL,
-  `calcoperator` CHAR(1) NULL DEFAULT NULL,
-  `budgetoractual` SMALLINT NOT NULL DEFAULT 0,
-  `valformat` CHAR(1) NOT NULL,
-  `constant` DOUBLE NOT NULL DEFAULT 0,
-  PRIMARY KEY (`reportid`, `colno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `reportfields`;
-CREATE TABLE `reportfields` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `reportid` INT NOT NULL DEFAULT 0,
-  `entrytype` VARCHAR(15) NOT NULL DEFAULT '',
-  `seqnum` INT NOT NULL DEFAULT 0,
-  `fieldname` VARCHAR(80) NOT NULL DEFAULT '',
-  `displaydesc` VARCHAR(25) NOT NULL DEFAULT '',
-  `visible` VARCHAR(1) NOT NULL DEFAULT 1,
-  `columnbreak` VARCHAR(1) NOT NULL DEFAULT 1,
-  `params` LONGTEXT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `reportheaders`;
-CREATE TABLE `reportheaders` (
-  `reportid` SMALLINT NOT NULL AUTO_INCREMENT,
-  `reportheading` VARCHAR(80) NOT NULL,
-  `groupbydata1` VARCHAR(15) NOT NULL,
-  `newpageafter1` SMALLINT NOT NULL DEFAULT 0,
-  `lower1` VARCHAR(10) NOT NULL,
-  `upper1` VARCHAR(10) NOT NULL,
-  `groupbydata2` VARCHAR(15) NULL DEFAULT NULL,
-  `newpageafter2` SMALLINT NOT NULL DEFAULT 0,
-  `lower2` VARCHAR(10) NULL DEFAULT NULL,
-  `upper2` VARCHAR(10) NULL DEFAULT NULL,
-  `groupbydata3` VARCHAR(15) NULL DEFAULT NULL,
-  `newpageafter3` SMALLINT NOT NULL DEFAULT 0,
-  `lower3` VARCHAR(10) NULL DEFAULT NULL,
-  `upper3` VARCHAR(10) NULL DEFAULT NULL,
-  `groupbydata4` VARCHAR(15) NOT NULL,
-  `newpageafter4` SMALLINT NOT NULL DEFAULT 0,
-  `upper4` VARCHAR(10) NOT NULL,
-  `lower4` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`reportid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `reportlinks`;
-CREATE TABLE `reportlinks` (
-  `table1` VARCHAR(25) NOT NULL,
-  `table2` VARCHAR(25) NOT NULL,
-  `equation` VARCHAR(75) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `reports`;
-CREATE TABLE `reports` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `reportname` VARCHAR(30) NOT NULL DEFAULT '',
-  `reporttype` CHAR(3) NOT NULL DEFAULT 'rpt',
-  `groupname` VARCHAR(9) NOT NULL DEFAULT 'misc',
-  `defaultreport` CHAR(1) NOT NULL DEFAULT '0',
-  `papersize` VARCHAR(15) NOT NULL DEFAULT 'A4,210,297',
-  `paperorientation` CHAR(1) NOT NULL DEFAULT 'P',
-  `margintop` INT NOT NULL DEFAULT '10',
-  `marginbottom` INT NOT NULL DEFAULT '10',
-  `marginleft` INT NOT NULL DEFAULT '10',
-  `marginright` INT NOT NULL DEFAULT '10',
-  `coynamefont` VARCHAR(20) NOT NULL DEFAULT 'Helvetica',
-  `coynamefontsize` INT NOT NULL DEFAULT '12',
-  `coynamefontcolor` VARCHAR(11) NOT NULL DEFAULT '0,0,0',
-  `coynamealign` CHAR(1) NOT NULL DEFAULT 'C',
-  `coynameshow` CHAR(1) NOT NULL DEFAULT '1',
-  `title1desc` VARCHAR(50) NOT NULL DEFAULT '%reportname%',
-  `title1font` VARCHAR(20) NOT NULL DEFAULT 'Helvetica',
-  `title1fontsize` INT NOT NULL DEFAULT '10',
-  `title1fontcolor` VARCHAR(11) NOT NULL DEFAULT '0,0,0',
-  `title1fontalign` CHAR(1) NOT NULL DEFAULT 'C',
-  `title1show` CHAR(1) NOT NULL DEFAULT '1',
-  `title2desc` VARCHAR(50) NOT NULL DEFAULT 'Report Generated %date%',
-  `title2font` VARCHAR(20) NOT NULL DEFAULT 'Helvetica',
-  `title2fontsize` INT NOT NULL DEFAULT '10',
-  `title2fontcolor` VARCHAR(11) NOT NULL DEFAULT '0,0,0',
-  `title2fontalign` CHAR(1) NOT NULL DEFAULT 'C',
-  `title2show` CHAR(1) NOT NULL DEFAULT '1',
-  `filterfont` VARCHAR(10) NOT NULL DEFAULT 'Helvetica',
-  `filterfontsize` INT NOT NULL DEFAULT '8',
-  `filterfontcolor` VARCHAR(11) NOT NULL DEFAULT '0,0,0',
-  `filterfontalign` CHAR(1) NOT NULL DEFAULT 'L',
-  `datafont` VARCHAR(10) NOT NULL DEFAULT 'Helvetica',
-  `datafontsize` INT NOT NULL DEFAULT '10',
-  `datafontcolor` VARCHAR(10) NOT NULL DEFAULT 'black',
-  `datafontalign` CHAR(1) NOT NULL DEFAULT 'L',
-  `totalsfont` VARCHAR(10) NOT NULL DEFAULT 'Helvetica',
-  `totalsfontsize` INT NOT NULL DEFAULT '10',
-  `totalsfontcolor` VARCHAR(11) NOT NULL DEFAULT '0,0,0',
-  `totalsfontalign` CHAR(1) NOT NULL DEFAULT 'L',
-  `col1width` INT NOT NULL DEFAULT '25',
-  `col2width` INT NOT NULL DEFAULT '25',
-  `col3width` INT NOT NULL DEFAULT '25',
-  `col4width` INT NOT NULL DEFAULT '25',
-  `col5width` INT NOT NULL DEFAULT '25',
-  `col6width` INT NOT NULL DEFAULT '25',
-  `col7width` INT NOT NULL DEFAULT '25',
-  `col8width` INT NOT NULL DEFAULT '25',
-  `col9width` INT NOT NULL DEFAULT '25',
-  `col10width` INT NOT NULL DEFAULT '25',
-  `col11width` INT NOT NULL DEFAULT '25',
-  `col12width` INT NOT NULL DEFAULT '25',
-  `col13width` INT NOT NULL DEFAULT '25',
-  `col14width` INT NOT NULL DEFAULT '25',
-  `col15width` INT NOT NULL DEFAULT '25',
-  `col16width` INT NOT NULL DEFAULT '25',
-  `col17width` INT NOT NULL DEFAULT '25',
-  `col18width` INT NOT NULL DEFAULT '25',
-  `col19width` INT NOT NULL DEFAULT '25',
-  `col20width` INT NOT NULL DEFAULT '25',
-  `table1` VARCHAR(25) NOT NULL DEFAULT '',
-  `table2` VARCHAR(25) NULL DEFAULT NULL,
-  `table2criteria` VARCHAR(75) NULL DEFAULT NULL,
-  `table3` VARCHAR(25) NULL DEFAULT NULL,
-  `table3criteria` VARCHAR(75) NULL DEFAULT NULL,
-  `table4` VARCHAR(25) NULL DEFAULT NULL,
-  `table4criteria` VARCHAR(75) NULL DEFAULT NULL,
-  `table5` VARCHAR(25) NULL DEFAULT NULL,
-  `table5criteria` VARCHAR(75) NULL DEFAULT NULL,
-  `table6` VARCHAR(25) NULL DEFAULT NULL,
-  `table6criteria` VARCHAR(75) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `SalesHeader`;
 CREATE TABLE `SalesHeader` (
@@ -1273,7 +1147,7 @@ CREATE TABLE `SalesHeader` (
   `shipping` DOUBLE NULL,
   `packagescharge` DOUBLE NULL,
   `picture` LONGTEXT NULL,
-  PRIMARY KEY (`documentno`)
+  PRIMARY KEY (`entryno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `SalesLine`;
@@ -1304,11 +1178,12 @@ CREATE TABLE `SalesLine` (
   `UOM` VARCHAR(10) NULL,
   `shipping` DOUBLE NULL,
   `PriceInPricelist` DOUBLE NULL,
-  `Increase` DOUBLE NULL /* computed column in MSSQL */,
+  `Increase` DOUBLE NULL,
   `PartPerUnit` DOUBLE NULL,
   `modified` INT NULL,
   `Qunatity_replaced` INT NULL,
-  `packagescharge` DOUBLE NULL
+  `packagescharge` DOUBLE NULL,
+  PRIMARY KEY (`entryno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `salesrepsinfo`;
@@ -1336,8 +1211,9 @@ CREATE TABLE `salesrepsinfo` (
   `postcode` CHAR(100) NULL,
   `curr_cod` CHAR(10) NULL,
   `curr_rat` DECIMAL(9,5) NULL,
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
-  `commissionposting` VARCHAR(20) NULL
+  `pkey` INT NOT NULL AUTO_INCREMENT,
+  `commissionposting` VARCHAR(20) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `scripts`;
@@ -1420,10 +1296,11 @@ CREATE TABLE `stockledger` (
   `len` DECIMAL(10,2) NULL,
   `wid` DECIMAL(10,2) NULL,
   `sman` CHAR(10) NULL,
-  `pkey` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
+  `pkey` INT NOT NULL AUTO_INCREMENT,
   `BQitemcode` CHAR(10) NULL,
   `dimension` VARCHAR(10) NULL,
-  `PartPerUnit` DOUBLE NULL
+  `PartPerUnit` DOUBLE NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `stockmaster`;
@@ -1451,7 +1328,8 @@ CREATE TABLE `stockmaster` (
   `isstock_4` TINYINT(1) NULL,
   `isstock_5` TINYINT(1) NULL,
   `isstock_6` TINYINT(1) NULL,
-  `production` VARCHAR(2) NULL
+  `production` VARCHAR(2) NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `StockRegister`;
@@ -1460,11 +1338,12 @@ CREATE TABLE `StockRegister` (
   `StockIn` DOUBLE NULL,
   `cost` DOUBLE NULL,
   `StockOut` DOUBLE NULL,
-  `StockBalance` DOUBLE NULL /* computed column in MSSQL */,
+  `StockBalance` DOUBLE NULL,
   `rowid` BIGINT NOT NULL AUTO_INCREMENT,
   `journal` CHAR(20) NULL,
   `GRN` CHAR(20) NULL,
-  `PartPerUnit` DOUBLE NULL
+  `PartPerUnit` DOUBLE NULL,
+  PRIMARY KEY (`rowid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `Stores`;
@@ -1524,8 +1403,9 @@ CREATE TABLE `tanktrans` (
   `variance` DOUBLE NULL,
   `doctype` INT NULL,
   `itemcode` VARCHAR(20) NULL,
-  `index` DECIMAL(18,0) NOT NULL AUTO_INCREMENT,
-  `BQitemcode` CHAR(10) NULL
+  `index` BIGINT NOT NULL AUTO_INCREMENT,
+  `BQitemcode` CHAR(10) NULL,
+  PRIMARY KEY (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `Tasks`;
@@ -1544,7 +1424,8 @@ CREATE TABLE `Tasks` (
   `lastactivity` DATETIME NULL,
   `time_from` VARCHAR(25) NULL,
   `time_to` VARCHAR(25) NULL,
-  `location` LONGTEXT NULL
+  `location` LONGTEXT NULL,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `unit`;
@@ -1552,7 +1433,8 @@ CREATE TABLE `unit` (
   `code` CHAR(10) NULL,
   `descrip` CHAR(50) NOT NULL,
   `sns` CHAR(10) NULL,
-  `pkey` INT NOT NULL AUTO_INCREMENT
+  `pkey` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`pkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `vatcategory`;
@@ -1561,7 +1443,7 @@ CREATE TABLE `vatcategory` (
   `vat` DECIMAL(10,2) NOT NULL,
   `vatdecrip` CHAR(100) NOT NULL,
   `taxcatid` SMALLINT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`vatc`)
+  PRIMARY KEY (`taxcatid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `www_users`;
@@ -1591,13 +1473,16 @@ CREATE TABLE `www_users` (
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 -- Unique indexes
 ALTER TABLE `acct` ADD UNIQUE KEY `IX_acct` (`accno`);
 ALTER TABLE `Dimensions` ADD UNIQUE KEY `IX_Dimensions` (`id`, `Code`);
 ALTER TABLE `ProductionMaster` ADD UNIQUE KEY `IX_ProductionMaster` (`Batchno`);
+ALTER TABLE `AssetsHeader` ADD INDEX(`documentno`);
+ALTER TABLE `FixedAssetsLine` ADD INDEX(`documentno`);
 
 -- Foreign keys
-ALTER TABLE `audittrail` ADD CONSTRAINT `audittrail$audittrail$audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`);
+ALTER TABLE `audittrail` ADD CONSTRAINT `audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`);
 ALTER TABLE `Dimensions` ADD CONSTRAINT `FK_Dimensions_DimensionSetUp` FOREIGN KEY (`id`) REFERENCES `DimensionSetUp` (`id`);
 ALTER TABLE `FixedAssetsLine` ADD CONSTRAINT `FK_FixedAssetsLine_AssetsHeader` FOREIGN KEY (`documentno`) REFERENCES `AssetsHeader` (`documentno`);
 ALTER TABLE `Generalledger` ADD CONSTRAINT `FK_Generalledger_acct` FOREIGN KEY (`accountcode`) REFERENCES `acct` (`accno`);
@@ -1605,9 +1490,9 @@ ALTER TABLE `Generalledger` ADD CONSTRAINT `FK_Generalledger_acct1` FOREIGN KEY 
 ALTER TABLE `Generalledger` ADD CONSTRAINT `FK_Generalledger_currencies` FOREIGN KEY (`currencycode`) REFERENCES `currencies` (`currabrev`);
 ALTER TABLE `ProdcutionMasterLine` ADD CONSTRAINT `FK_ProdcutionMasterLine_ProductionMaster` FOREIGN KEY (`Batchno`) REFERENCES `ProductionMaster` (`Batchno`);
 ALTER TABLE `PurchaseLine` ADD CONSTRAINT `FK_PurchaseLine_PurchaseHeader` FOREIGN KEY (`documentno`) REFERENCES `PurchaseHeader` (`documentno`);
-ALTER TABLE `reportcolumns` ADD CONSTRAINT `reportcolumns$reportcolumns$reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`reportid`);
-ALTER TABLE `securitygroups` ADD CONSTRAINT `securitygroups$securitygroups$securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`);
-ALTER TABLE `securitygroups` ADD CONSTRAINT `securitygroups$securitygroups$securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`);
+ALTER TABLE `reportcolumns` ADD CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`reportid`);
+ALTER TABLE `securitygroups` ADD CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`);
+ALTER TABLE `securitygroups` ADD CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`);
 ALTER TABLE `stockmaster` ADD CONSTRAINT `FK_stockmaster_inventorypostinggroup` FOREIGN KEY (`postinggroup`) REFERENCES `inventorypostinggroup` (`code`);
 
 SET FOREIGN_KEY_CHECKS=1;

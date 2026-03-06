@@ -66,27 +66,27 @@ echo '</select></td></tr>' ;
 
  if(mb_strlen($_POST['projectcode'])>0){
      $Result = DB_query("select distinct
-	budgets.periodno,
+	Budgets.periodno,
 	max(FinancialPeriods.`end_date`) as ENDDATE,
 	min(FinancialPeriods.`start_date`) as STARTDATE,
-	(select sum(B.amount) from Budgets B where B.periodno=budgets.periodno) as BUDGET
-	from budgets 
-        join FinancialPeriods on budgets.periodno=FinancialPeriods.`periodno`
-        where budgets.`dimecode2`='".$_POST['projectcode']."'
-	group by budgets.periodno,
+	(select sum(B.amount) from Budgets B where B.periodno=Budgets.periodno) as BUDGET
+	from Budgets 
+        join FinancialPeriods on Budgets.periodno=FinancialPeriods.`periodno`
+        where Budgets.`dimecode2`='".$_POST['projectcode']."'
+	group by Budgets.periodno,
 	Budgets.amount 
-        order by budgets.periodno",$db);
+        order by Budgets.periodno",$db);
  }else{
      $Result = DB_query("select distinct
-	budgets.periodno,
+	Budgets.periodno,
 	max(FinancialPeriods.`end_date`) as ENDDATE,
 	min(FinancialPeriods.`start_date`) as STARTDATE,
-	(select sum(B.amount) from Budgets B where B.periodno=budgets.periodno) as BUDGET
-	from budgets 
-        join FinancialPeriods on budgets.periodno=FinancialPeriods.`periodno`
-	group by budgets.periodno,
+	(select sum(B.amount) from Budgets B where B.periodno=Budgets.periodno) as BUDGET
+	from Budgets 
+        join FinancialPeriods on Budgets.periodno=FinancialPeriods.`periodno`
+	group by Budgets.periodno,
 	Budgets.amount 
-        order by budgets.periodno",$db);
+        order by Budgets.periodno",$db);
  }
  
 echo '<tr><td colspan="2" valign="top"><table class="table table-bordered"><tr><th>Existing <br/> Budgets by  <br/>Financial Period</th><th class="number">Total Budget</th></tr>';

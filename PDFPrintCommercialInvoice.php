@@ -243,7 +243,7 @@ echo '<p class="page_title_text">'
 echo '<form autocomplete="off"action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post"><input autocomplete="false" name="hidden" type="text" style="display:none;">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-$SQL="select top ". $_SESSION['DefaultDisplayRecordsMax'] ."
+$SQL="select 
        `SalesHeader`.`documentno`
       ,`SalesHeader`.`docdate`
       ,`SalesHeader`.`oderdate`
@@ -270,7 +270,7 @@ $SQL="select top ". $_SESSION['DefaultDisplayRecordsMax'] ."
       ,`SalesHeader`.`status`
       ,`SalesHeader`.`userid`  
       order by 
-      `SalesHeader`.`docdate` desc
+      `SalesHeader`.`docdate` desc limit  ". $_SESSION['DefaultDisplayRecordsMax'] ."
       ";
     $Result=DB_query($SQL,$db);
        

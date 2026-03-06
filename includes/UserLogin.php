@@ -12,8 +12,6 @@ define('UL_MAINTENANCE', 5);
 define('UL_REGISTERMEMBER', 6);
 include('Mailer/CustomMailerclass.php');
 
-
-
 function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 
 	global $debug;

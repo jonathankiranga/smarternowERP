@@ -1,4 +1,3 @@
-
 <?php
 include('includes/session.inc');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
@@ -42,14 +41,13 @@ if(isset($_SESSION['Supplieritemcode'])){
 			<th style="width:33%">' . _('Supplier Transactions') . '</th>
 			<th style="width:33%">' . _('Supplier Maintenance') . '</th>
 		</tr>';
-	echo '<tr><td valign="top" class="select">'; /* Inquiry Options */
-	echo '<a href="' . $RootPath . '/PrintvendorStatements.php?SupplierID=' . $_SESSION['Supplieritemcode'] . '">' . _('Supplier Account Inquiry') . '</a>
-	<br /><br />';
-	echo '</td><td valign="top" class="select">'; /* Supplier Transactions */
+	echo '<tr><td valign="top" class="select">';  
+	echo '<a href="' . $RootPath . '/PrintvendorStatements.php?SupplierID=' . $_SESSION['Supplieritemcode'] . '">' . _('Supplier Account Inquiry') . '</a><br /><br />';
+	echo '</td><td valign="top" class="select">';  
 	echo '<a href="' . $RootPath . '/EnterBills.php?SupplierID=' . $_SESSION['Supplieritemcode'] . '&new=1">' . _('Enter Invoice') . '</a><br />';
 	echo '<a href="' . $RootPath . '/PaymentVoucher.php?SupplierID=' . $_SESSION['Supplieritemcode'] . '">' . _('Make payment ') . '</a><br />';
 	echo '<br />';
-	echo '</td><td valign="top" class="select">'; /* Supplier Maintenance */
+	echo '</td><td valign="top" class="select">';  
 	echo '<a href="' . $RootPath . '/Supplier.php">' . _('Add a New Supplier') . '</a>
 		<br /><a href="' . $RootPath . '/Supplier.php?Modify=' . $_SESSION['Supplieritemcode'] . '">' . _('Modify Or Delete Supplier Details') . '</a>
 		</td>

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $PageSecurity=0;
 include('includes/session.inc');
 $Title =_('Main Menu');

@@ -35,8 +35,7 @@ function testconnect(){
     prnMsg('<a href="index.php">Click here... to try logging in again</a>','info');
     echo '</div></body></html>';
     session_unset();
-    session_destroy();
-    exit();
+     exit();
 }
 
 function DB_query($SQL,$Conn,$ErrorMessage='',$DebugMessage= '',$Transaction=false,$TrapErrors=true){
@@ -44,7 +43,7 @@ function DB_query($SQL,$Conn,$ErrorMessage='',$DebugMessage= '',$Transaction=fal
 	global $PathPrefix;
 
 	$result = $Conn->query($SQL);
-    $SQLArray = explode(' ',$SQL);
+        $SQLArray = explode(' ',$SQL);
        
 	if ($DebugMessage == '') {
         $DebugMessage = _('The SQL that failed was');
@@ -53,7 +52,7 @@ function DB_query($SQL,$Conn,$ErrorMessage='',$DebugMessage= '',$Transaction=fal
 	if ($Conn->errno != 0 AND $TrapErrors==true){
 
 		if ($TrapErrors){
-            require_once($PathPrefix . 'includes/header.inc');
+                    require_once($PathPrefix . 'includes/header.inc');
 		}
 
 		prnMsg($ErrorMessage . '<br />' . $Conn->error,'error', _('Database Error'). ' ' .$Conn->errno);
@@ -286,4 +285,82 @@ function fetch_array($id_res){
     return array();
 }
 
-?>
+ 
+Function Triger_getaccountno($accdesc){
+    global $db;
+   
+   $ResultIndex = DB_System('Select count(*) from acct',$db);
+   $pkey = DB_fetch_row($ResultIndex);
+   $int  =(int) $pkey[0];
+   $pad_length = (6-count($int));
+   $replicate = str_repeat('0', $pad_length);
+   $code = substr($accdesc,1,2) . $replicate .$int;
+ 
+ return $code;
+}
+
+function Triger_bankaccounts(){
+    global $db;
+     
+   $ResultIndex = DB_System('Select count(*) from bankaccounts',$db);
+   $pkey = DB_fetch_row($ResultIndex);
+   $int  =(int) $pkey[0];
+   $pad_length = (6-count($int));
+   $replicate = str_repeat('0', $pad_length);
+   $code = 'BK' . $replicate .$int;
+   
+ return $code;
+}
+
+Function Triger_creditors($descript){
+      global $db;
+      
+   $ResultIndex = DB_System('Select count(*) from creditors',$db);
+   $pkey = DB_fetch_row($ResultIndex);
+   $int  =(int) $pkey[0];
+   $pad_length = (4-count($int));
+   $replicate = str_repeat('0', $pad_length);
+   $code = 'cr' .substr($descript, 0, 2) . $replicate .$int;
+ 
+ return $code;
+}
+
+Function Triger_debtors($descript){
+      global $db;
+      
+   $ResultIndex = DB_System('Select count(*) from debtors',$db);
+   $pkey = DB_fetch_row($ResultIndex);
+   $int  =(int) $pkey[0];
+   $pad_length = (4-count($int));
+   $replicate = str_repeat('0', $pad_length);
+   $code = 'Dr' .substr($descript, 0, 2) . $replicate .$int;
+ 
+ return $code;
+}
+
+Function Triger_stockmaster($descript){
+      global $db;
+      
+   $ResultIndex = DB_System('Select count(*) from stockmaster',$db);
+   $pkey = DB_fetch_row($ResultIndex);
+   $int  =(int) $pkey[0];
+   $pad_length = (6-count($int));
+   $replicate = str_repeat('0', $pad_length);
+   $code = substr($descript, 0, 2) . $replicate .$int;
+ 
+ return $code;
+}
+
+Function Triger_unit(){
+      global $db;
+      
+   $ResultIndex = DB_System('Select count(*) from unit',$db);
+   $pkey = DB_fetch_row($ResultIndex);
+   $int  =(int) $pkey[0];
+   $pad_length = (2-count($int));
+   $replicate = str_repeat('0', $pad_length);
+   $code = 'u' . $replicate .$int;
+ 
+ return $code;
+}
+

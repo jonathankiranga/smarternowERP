@@ -1,6 +1,6 @@
 <?php
-require_once 'includes/vendor/autoload.php';
 include('includes/session.inc');
+require_once 'vendor/autoload.php';
 $Title = _('New Task');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

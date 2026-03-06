@@ -13,7 +13,7 @@ $host = 'localhost';
 $DBType = 'mysqli';
 //assuming that the web server is also the sql server
 $DBUser = 'root';
-$DBPassword = 'vega2019';
+$DBPassword = 'mysqlpassword';
 // The timezone of the business - this allows the possibility of having;
 date_default_timezone_set('Africa/Nairobi');
 putenv('TZ=Africa/Nairobi');
@@ -42,4 +42,3 @@ if ($RootPath == '/' OR $RootPath == '\\') {
 $CompanyList[] = array('database'=>'mozillaerpv2' ,'company'=>'QBPL Company' );
 //End Installed companies-do not change this line
 /* Make sure there is nothing - not even spaces after this last ?> */
-?>

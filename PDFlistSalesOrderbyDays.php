@@ -132,7 +132,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
       order by 
       `SalesHeader`.`docdate` desc";
 }else{
-$SQL="select top ". $_SESSION['DefaultDisplayRecordsMax'] ."
+$SQL="select 
        `SalesHeader`.`documentno`
       ,`SalesHeader`.`docdate`
       ,`SalesHeader`.`oderdate`
@@ -159,7 +159,7 @@ $SQL="select top ". $_SESSION['DefaultDisplayRecordsMax'] ."
       ,`SalesHeader`.`status`
       ,`SalesHeader`.`userid`  
       order by 
-      `SalesHeader`.`docdate` desc";
+      `SalesHeader`.`docdate` desc  limit ". $_SESSION['DefaultDisplayRecordsMax'] ."";
 }
     $Result=DB_query($SQL,$db);
        

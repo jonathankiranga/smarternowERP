@@ -244,11 +244,13 @@ function CreateNewAccount(){
             $_POST['DirectPosting']=0;
         }
         
+      $accno = Triger_getaccountno($_POST['accdesc']);
       $SQL=sprintf("INSERT INTO `acct` (`ReportCode`,`accdesc`,`balance_income`,`ReportStyle`,
-       `direct`,`inactive`,`Sale_Purchase_Neither`,`Calculation`,postinggroup) values ('%s','%s',%s,%s,%s,%s,%s,'%s','%s')",
+       `direct`,`inactive`,`Sale_Purchase_Neither`,`Calculation`,postinggroup,accno) 
+       values ('%s','%s',%s,%s,%s,%s,%s,'%s','%s','%s')",
        $_POST['ReportCode'],$_POST['accdesc'],$_POST['BalanceSheet'],
        $_POST['AccountType'],$_POST['DirectPosting'],$_POST['Blocked'],
-       $_POST['Sale_Purchase_Neither'],$_POST['Calculation'],$_POST['postinggroup']);
+       $_POST['Sale_Purchase_Neither'],$_POST['Calculation'],$_POST['postinggroup'],$accno);
       
        $results=DB_query($SQL,$db);
        if(DB_error_no($db)>0){

@@ -24,17 +24,13 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
         
 /*Maybe we should check config directories exist and try to create if not */
         
-	if (!isset($_SESSION['VersionNumber'])){ 
-// the config record for VersionNumber is not yet added
-            header('Location: UpgradeDatabase.php'); 
-//divert to the db upgrade if the VersionNumber is not in the config table
-	}
+	
        
         /*Load the pagesecurity settings from the database */
 	$sql="SELECT script, pagesecurity FROM scripts";
 	$result=DB_query($sql, $db,'','',false,false);
 	if (DB_error_no($db)!=0){
-		header('Location: UpgradeDatabase.php');
+		die('No database');
 	}
 	//Populate the PageSecurityArray array for each script's  PageSecurity value
 	while ($myrow=DB_fetch_array($result)) {
@@ -73,6 +69,8 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
 		prnMsg( _('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',_('CRITICAL PROBLEM'));
+		// Debug info
+		prnMsg('Debug: Database=' . $_SESSION['DatabaseName'] . '<br/>Query Result Type: ' . gettype($ReadCoyResult) . '<br/>DB Error: ' . DB_error_msg($db), 'info');
 		exit;
 	} else {
 		$_SESSION['CompanyRecord'] =  DB_fetch_array($ReadCoyResult);

@@ -39,8 +39,11 @@ function Convert-ToMySqlLiteral {
         return "X'$hex'"
     }
 
+    # Handle DateTime objects
     if ($Value -is [DateTime]) {
-        return "'" + $Value.ToString("yyyy-MM-dd HH:mm:ss.fff", [System.Globalization.CultureInfo]::InvariantCulture) + "'"
+        # Strip milliseconds and format as yyyy-MM-dd HH:mm:ss
+        $v = [DateTime]$Value
+        return "'" + $v.ToString("yyyy-MM-dd HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture) + "'"
     }
 
     if ($Value -is [Guid]) {
@@ -61,7 +64,20 @@ function Convert-ToMySqlLiteral {
         return [Convert]::ToString($Value, [System.Globalization.CultureInfo]::InvariantCulture)
     }
 
+    # Convert to string and escape
     $s = [string]$Value
+    
+    # Try to detect and convert date strings that weren't properly typed
+    if ($s -match '^\d{1,2}/\d{1,2}/\d{4}' -or $s -match 'AM|PM') {
+        try {
+            $dt = [DateTime]::Parse($s, [System.Globalization.CultureInfo]::InvariantCulture)
+            return "'" + $dt.ToString("yyyy-MM-dd HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture) + "'"
+        }
+        catch {
+            # If parsing fails, continue with string escaping
+        }
+    }
+    
     $s = $s.Replace("\", "\\")
     $s = $s.Replace("'", "''")
     $s = $s.Replace([string][char]0, "")
@@ -163,12 +179,15 @@ ORDER BY s.name, t.name;
 
         $columnNames = @()
         foreach ($c in $data.Columns) {
-            $columnNames += (Quote-MySqlId [string]$c.ColumnName)
+            $colName = $c.ColumnName.ToString()
+            $columnNames += (Quote-MySqlId $colName)
         }
         $columnSql = $columnNames -join ", "
 
         $buffer = New-Object System.Collections.Generic.List[string]
         $i = 0
+        $newlineSeparator = "," + [Environment]::NewLine
+        
         foreach ($r in $data.Rows) {
             $vals = @()
             foreach ($c in $data.Columns) {
@@ -179,7 +198,7 @@ ORDER BY s.name, t.name;
 
             if ($buffer.Count -ge $BatchSize) {
                 $sw.WriteLine("INSERT INTO $mysqlTable ($columnSql) VALUES")
-                $sw.WriteLine(($buffer -join ",`n") + ";")
+                $sw.WriteLine(($buffer -join $newlineSeparator) + ";")
                 $sw.WriteLine("")
                 $buffer.Clear()
             }
@@ -187,7 +206,7 @@ ORDER BY s.name, t.name;
 
         if ($buffer.Count -gt 0) {
             $sw.WriteLine("INSERT INTO $mysqlTable ($columnSql) VALUES")
-            $sw.WriteLine(($buffer -join ",`n") + ";")
+            $sw.WriteLine(($buffer -join $newlineSeparator) + ";")
             $sw.WriteLine("")
             $buffer.Clear()
         }

@@ -58,11 +58,11 @@
                         echo '<li><a  target="mainContentIFrame"   href="SelectProduct.php?newsearch=yes">' ._('Inventory Items List') .'</a></li>';
                         echo '<li><a  target="mainContentIFrame"   href="PriceListdisplay.php">' ._('Display Price List ') .'</a></li>';
 			
-			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="'. $RootPath .'/doc/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
+			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="'. $RootPath .'/doc/Manual/SystemManual.html'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
 
-			if (mb_substr($_SESSION['Language'],0,2) != 'en'){
+			if (substr($_SESSION['Language'],0,2) != 'en'){
 				if (file_exists('locale/'.$_SESSION['Language'].'/Manual/ManualContents.php')){
-				  echo '<li><a target="_blank" href="'.$RootPath.'/locale/'.$_SESSION['Language'].'/Manual/ManualContents.php'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
+				  echo '<li><a target="_blank" href="'.$RootPath.'/locale/'.$_SESSION['Language'].'/Manual/SystemManual.html'. $ViewTopic . $BookMark. '">' . _('Manual') . '</a></li>';
 				} else {
 				  echo $DefaultManualLink;
 				}

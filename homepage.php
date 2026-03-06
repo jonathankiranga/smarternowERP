@@ -1,91 +1,305 @@
 <?php
 $PageSecurity=0;
 include('includes/session.inc');
-include('includes/SQL_CommonFunctions.inc');;
+include('includes/SQL_CommonFunctions.inc');
 
 echo '<link rel="shortcut icon" href="'.$RootPath.'/comerp.ico" />';
 echo '<link rel="icon" href="'.$RootPath.'/comerp.ico" />';
-    
-echo '<link rel="stylesheet" href="'.$RootPath.'/css/bootstrap.min.css"  type="text/css"/>
-      <link rel="stylesheet" href="'.$RootPath.'/css/bootstrap-responsive.min.css"  type="text/css"/>
-      <link rel="stylesheet" href="'.$RootPath.'/css/homepage.css" type="text/css"/>';
 
-echo '<script type="text/javascript" src="'.$RootPath.'/javascripts/1.9.1/jquery.min.js"></script>
-      <script type="text/javascript" src="'.$RootPath.'/Javascripts/2.3.1/bootstrap.min.js"></script>
-      <script type="text/javascript" src="'.$RootPath.'/javascripts/JQueryclases.mim.js"></script>
-      <script type="text/javascript" src="'.$RootPath.'/javascripts/MiscFunctions.min.js"></script>'; 
-      
-echo '<div class="overlay"></div><DIV class="homePageOne" id="h1k" onmouseover="dragElement(this);">'
-. '<DIV class="homepage centre"><ul>' . _('Documents Pending Approval') . '  '.' <img src="'.$RootPath.'/css/'.$Theme.'/images/tick.png"/></ul></DIV><ul>'
-. '<li>' . _('Purchase Orders') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" /><a href="ApprovePurchase.php" target="mainContentIFrame">'.CountPO(1).'</a></li>'
-. '<li>' . _('Store Requests') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" /><a href="ApproveStcokissues.php" target="mainContentIFrame">'.CountPO(2).'</a></li>'
-. '<li>' . _('Payment Vouchers(Head of Finance)') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/bank.png" /><a href="PDFFAMpaymentvoucher.php" target="mainContentIFrame">'.CountPO(3).'</a></li>'
-. '<li>' . _('Payment Vouchers(C.E.O)') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/bank.png" /><a href="PDFCEOpaymentvoucher.php" target="mainContentIFrame">'.CountPO(4).'</a></li>'
-. '<li>' . _('Price list for Sales Reps') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" /><a href="ApprovePriceList.php" target="mainContentIFrame">'.CountPO(6).'</a></li>'
-. '<li>' . _('Product Test Pending') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" /><a href="LaboratoryDataEntry.php" target="mainContentIFrame">'.CountPO(7).'</a></li>'
-. '</ul></div>';
+// Bootstrap 5 and modern CSS (LOCAL)
+echo '<link rel="stylesheet" href="'.$RootPath.'/css/bootstrap5.min.css" type="text/css"/>
+      <link rel="stylesheet" href="'.$RootPath.'/css/fontawesome-fix.css" type="text/css"/>
+      <link rel="stylesheet" href="'.$RootPath.'/css/homepage-modern.css" type="text/css"/>';
 
-        
-echo '<DIV class="homePageTwo" id="h2k" onmouseover="dragElement(this);">'
-. '<DIV class="homepage centre"><UL>' . _('To Do LIST') . '  '.' <img src="'.$RootPath.'/css/'.$Theme.'/images/help.png"/></ul></DIV><ul>'
-. '<li>' . _('Update Commisions ') . '  '.'<img  src="'.$RootPath.'/css/'.$Theme.'/images/help.png"/><a id="Checkwhenpaid"  target="mainContentIFrame">Update Commisions</a></li>'
-. '<li>' . _('Replenish Stock') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" />'.CountPO(14).'</li>'
-. '<li>' . _('Un-Delivered Purchase Orders ') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" /><a href="PurchaseOrderList.php" target="mainContentIFrame">'.CountPO(9).'</a></li>'
-. '<li>' . _('Un-invoiced Purchase Orders ') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" /><a href="GoodsReceivedNote.php" target="mainContentIFrame">'.CountPO(11).'</a></li>'
-. '<li>' . _('Un-posted Cheques') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/bank.png" /><a href="WriteCheque.php" target="mainContentIFrame">'.CountPO(5).'</a></li>'
-. '<li>' . _('Un-Collected Sales Orders ') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" /><a href="SalesDelivery.php" target="mainContentIFrame">'.CountPO(10).'</a></li>'
-. '<li>' . _('Un-posted Sales Orders') . '  '.'<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" /><a href="SalesInvoice.php" target="mainContentIFrame">'.CountPO(12).'</a></li>'
-. '</ul></div>';
+// Chart.js, Bootstrap JS, and modern scripts
+echo '<script src="'.$RootPath.'/javascripts/bootstrap5.bundle.min.js"></script>
+      <script src="'.$RootPath.'/javascripts/chart.min.js"></script>
+      <script src="'.$RootPath.'/javascripts/jquery-3.6.0.min.js"></script>
+      <script type="text/javascript" src="'.$RootPath.'/javascripts/MiscFunctions.min.js"></script>
+      <script type="text/javascript" src="'.$RootPath.'/javascripts/modern-dashboard.js"></script>';
 
-echo '<DIV class="homePagetree" id="h3k" onmouseover="dragElement(this);">'
-  . '<DIV class="centre"><div><div><ul class="nav nav-list"><li><label class="tree-toggler nav-header">My Banks</label>';
-	$BankSecurity = $_SESSION['PageSecurityArray'][basename('BankReconciliation.php')]; 
-  if ((in_array($BankSecurity, $_SESSION['AllowedPageSecurityTokens']) )) {
-   echo '<ul class="nav nav-list tree">'. GetMyBankBalances().'</ul></li></ul></div></div>';
-  }
-  
-  echo '  <DIV class="centre"><div><div><ul class="nav nav-list"><li><label class="tree-toggler nav-header">My Tasks<br><a href="crmclientsTasks.php?new=yes" target="mainContentIFrame">New Task</a></label>
-  <ul class="nav nav-list tree">'. GetMytacks().'</ul></li></ul></div></div>'
-   . '<div><div><ul class="nav nav-list"><li><label class="tree-toggler nav-header">My Activities<br><a href="crmclientsActivity.php?new=yes" target="mainContentIFrame">New Activity</a></label>
-    <ul class="nav nav-list tree">'. GetMyActivities().'</ul></li></ul></div></div>';
-echo '<script type="text/javascript" src="'.$RootPath.'/Javascripts/treeview/tree.js"></script>';
+// Modern Dashboard Structure
+echo '
+<div class="dashboard-wrapper">
+    <!-- Hero Section with Gradient -->
+    <div class="hero-section">
+        <div class="container-fluid">
+            <div class="row align-items-center py-2">
+                <div class="col-md-8">
+                    <h2 class="text-white fw-bold">Smart ERP Dashboard</h2>
+                    <p class="text-white-50 fs-6 mt-2">Welcome back! Here\'s your business at a glance.</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="text-white-50 small">
+                        <i class="fas fa-calendar"></i> ' . date('l, j F Y') . '
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-Function GetMyBankBalances(){
-    global $db;
-    
-    $sql="SELECT 
-           `accountcode`
-          ,`bankName`
-          ,`currency`
-          ,`lastreconcileddate`
-          ,`AccountNo`
-          ,`BranchCode`
-          ,`BranchName`
-          ,`lastreconbalance`
-          ,`lastChequeno`
-          ,`PostingGroup`
-          ,`Fluctuation`
-          ,`Makeinactive`
-          ,lastreconbalance
-          ,`AcctName`
-          ,`bankCode`
-          ,`swiftcode`
-      FROM `BankAccounts`
-      where (`Makeinactive`=0 or `Makeinactive` is null)";
-    
-   $lineecho= '<table class="table-striped table-bordered" style="font-size: 14px;">';
-    $ResultIndex=DB_query($sql,$db);
-   while( $rowbanks = DB_fetch_array($ResultIndex)){
-    $lineecho .= sprintf('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td class="number">%s</td></tr>',
-    $rowbanks['bankName'],$rowbanks['currency'],
-    _('Last Recon Date :'). ConvertSQLDate($rowbanks['lastreconcileddate']),
-    _('last Statemet balance :').$rowbanks['lastreconbalance'],
-    _('CB balance :').getbanklastbalance($rowbanks['accountcode']));
-     }
-   
-   $lineecho .= '</table>';
-   return $lineecho;
+    <!-- Main Content -->
+    <div class="container-fluid py-2">
+        <!-- KPI Cards Row -->
+        <div class="row g-2 mb-3">
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-blue">
+                    <div class="kpi-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">Purchase Orders</h6>
+                        <h2 class="kpi-value">'.CountPO(1).'</h2>
+                        <p class="kpi-text">Pending Approval</p>
+                        <a href="ApprovePurchase.php" target="mainContentIFrame" class="btn btn-sm btn-light mt-2">
+                            Review <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-purple">
+                    <div class="kpi-icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">Store Requests</h6>
+                        <h2 class="kpi-value">'.CountPO(2).'</h2>
+                        <p class="kpi-text">Waiting Approval</p>
+                        <a href="ApproveStcokissues.php" target="mainContentIFrame" class="btn btn-sm btn-light mt-2">
+                            Review <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-green">
+                    <div class="kpi-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">Vouchers (Finance)</h6>
+                        <h2 class="kpi-value">'.CountPO(3).'</h2>
+                        <p class="kpi-text">Needs Authorization</p>
+                        <a href="PDFFAMpaymentvoucher.php" target="mainContentIFrame" class="btn btn-sm btn-light mt-2">
+                            Review <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-orange">
+                    <div class="kpi-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">CEO Vouchers</h6>
+                        <h2 class="kpi-value">'.CountPO(4).'</h2>
+                        <p class="kpi-text">CEO Approval</p>
+                        <a href="PDFCEOpaymentvoucher.php" target="mainContentIFrame" class="btn btn-sm btn-light mt-2">
+                            Review <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary KPIs -->
+        <div class="row g-2 mb-3">
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-teal">
+                    <div class="kpi-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">Price Lists</h6>
+                        <h2 class="kpi-value">'.CountPO(6).'</h2>
+                        <p class="kpi-text">Awaiting Approval</p>
+                        <a href="ApprovePriceList.php" target="mainContentIFrame" class="btn btn-sm btn-light mt-2">
+                            Review <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-pink">
+                    <div class="kpi-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">Lab Tests</h6>
+                        <h2 class="kpi-value">'.CountPO(7).'</h2>
+                        <p class="kpi-text">Pending Review</p>
+                        <a href="LaboratoryDataEntry.php" target="mainContentIFrame" class="btn btn-sm btn-light mt-2">
+                            Review <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-red">
+                    <div class="kpi-icon">
+                        <i class="fas fa-dolly"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">Stock Replenish</h6>
+                        <h2 class="kpi-value">'.CountPO(14).'</h2>
+                        <p class="kpi-text">Below Reorder Level</p>
+                        <a href="ApproveStcokissues.php" target="mainContentIFrame" class="btn btn-sm btn-light mt-2">
+                            Action <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6">
+                <div class="kpi-card gradient-indigo">
+                    <div class="kpi-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h6 class="kpi-label">Dashboard</h6>
+                        <h2 class="kpi-value">Live</h2>
+                        <p class="kpi-text">System Status</p>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-light mt-2">
+                            Details <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Analytics Row -->
+        <div class="row g-2 mb-3">
+            <div class="col-xl-6">
+                <div class="analytics-card">
+                    <div class="card-header-custom">
+                        <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>To Do List</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="todo-list">
+                            <div class="todo-item">
+                                <div class="todo-icon">
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </div>
+                                <div class="todo-content">
+                                    <h6>Update Commissions</h6>
+                                    <a href="#" target="mainContentIFrame" class="small text-primary">Manage Commissions</a>
+                                </div>
+                            </div>
+                            <div class="todo-item">
+                                <div class="todo-icon">
+                                    <i class="fas fa-box text-warning"></i>
+                                </div>
+                                <div class="todo-content">
+                                    <h6>Un-Delivered Purchase Orders</h6>
+                                    <a href="PurchaseOrderList.php" target="mainContentIFrame" class="small text-primary">'.CountPO(9).' items</a>
+                                </div>
+                            </div>
+                            <div class="todo-item">
+                                <div class="todo-icon">
+                                    <i class="fas fa-file-invoice text-info"></i>
+                                </div>
+                                <div class="todo-content">
+                                    <h6>Un-invoiced Purchase Orders</h6>
+                                    <a href="GoodsReceivedNote.php" target="mainContentIFrame" class="small text-primary">'.CountPO(11).' items</a>
+                                </div>
+                            </div>
+                            <div class="todo-item">
+                                <div class="todo-icon">
+                                    <i class="fas fa-money-check text-danger"></i>
+                                </div>
+                                <div class="todo-content">
+                                    <h6>Un-posted Cheques</h6>
+                                    <a href="WriteCheque.php" target="mainContentIFrame" class="small text-primary">'.CountPO(5).' pending</a>
+                                </div>
+                            </div>
+                            <div class="todo-item">
+                                <div class="todo-icon">
+                                    <i class="fas fa-truck text-success"></i>
+                                </div>
+                                <div class="todo-content">
+                                    <h6>Un-Collected Sales Orders</h6>
+                                    <a href="SalesDelivery.php" target="mainContentIFrame" class="small text-primary">'.CountPO(10).' ready</a>
+                                </div>
+                            </div>
+                            <div class="todo-item">
+                                <div class="todo-icon">
+                                    <i class="fas fa-file text-primary"></i>
+                                </div>
+                                <div class="todo-content">
+                                    <h6>Un-posted Sales Orders</h6>
+                                    <a href="SalesInvoice.php" target="mainContentIFrame" class="small text-primary">'.CountPO(12).' items</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="analytics-card">
+                    <div class="card-header-custom">
+                        <h5 class="mb-0"><i class="fas fa-university me-2"></i>Bank Accounts</h5>
+                    </div>
+                    <div class="card-body">';
+
+$BankSecurity = $_SESSION['PageSecurityArray'][basename('BankReconciliation.php')]; 
+if ((in_array($BankSecurity, $_SESSION['AllowedPageSecurityTokens']) )) {
+   echo GetMyBankBalancesModern();
+} else {
+   echo '<p class="text-muted">You do not have access to bank information</p>';
 }
+
+echo '
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tasks and Activities Row -->
+        <div class="row g-4">
+            <div class="col-xl-6">
+                <div class="analytics-card">
+                    <div class="card-header-custom">
+                        <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>My Tasks</h5>
+                        <a href="crmclientsTasks.php?new=yes" target="mainContentIFrame" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-plus me-1"></i>New Task
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="task-list">
+                            '.GetMytacksModern().'
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="analytics-card">
+                    <div class="card-header-custom">
+                        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>My Activities</h5>
+                        <a href="crmclientsActivity.php?new=yes" target="mainContentIFrame" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-plus me-1"></i>New Activity
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-list">
+                            '.GetMyActivitiesModern().'
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="'.$RootPath.'/javascripts/treeview/tree.js"></script>';
 
 function getbanklastbalance($accountcode){
      global $db;
@@ -207,6 +421,151 @@ function CountPO($Index=0){
   
   return $return;
 }
- 
 
-?>
+function GetMyBankBalancesModern(){
+    global $db;
+    
+    $sql="SELECT 
+           `accountcode`
+          ,`bankName`
+          ,`currency`
+          ,`lastreconcileddate`
+          ,`AccountNo`
+          ,`BranchCode`
+          ,`BranchName`
+          ,`lastreconbalance`
+          ,`lastChequeno`
+          ,`PostingGroup`
+          ,`Fluctuation`
+          ,`Makeinactive`
+          ,lastreconbalance
+          ,`AcctName`
+          ,`bankCode`
+          ,`swiftcode`
+      FROM `BankAccounts`
+      where (`Makeinactive`=0 or `Makeinactive` is null)";
+    
+    $lineecho = '<div class="bank-accounts-list">';
+    $ResultIndex=DB_query($sql,$db);
+    
+    $count = 0;
+    while( $rowbanks = DB_fetch_array($ResultIndex)){
+        $count++;
+        $cbBalance = getbanklastbalance($rowbanks['accountcode']);
+        $lineecho .= '
+        <div class="bank-item">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h6 class="mb-1 text-dark fw-bold">'.$rowbanks['bankName'].'</h6>
+                    <p class="small text-muted mb-1">
+                        <i class="fas fa-credit-card"></i> '.$rowbanks['AccountNo'].'
+                    </p>
+                </div>
+                <span class="badge badge-modern">'.$rowbanks['currency'].'</span>
+            </div>
+            <div class="row g-3">
+                <div class="col-6">
+                    <p class="small text-muted mb-1">Last Reconciled</p>
+                    <p class="fs-7 fw-bold">'.ConvertSQLDate($rowbanks['lastreconcileddate']).'</p>
+                </div>
+                <div class="col-6 text-end">
+                    <p class="small text-muted mb-1">Statement Balance</p>
+                    <p class="fs-7 fw-bold text-success">'.number_format($rowbanks['lastreconbalance'],2).'</p>
+                </div>
+                <div class="col-6">
+                    <p class="small text-muted mb-1">CB Balance</p>
+                    <p class="fs-7 fw-bold">'.$cbBalance.'</p>
+                </div>
+                <div class="col-6 text-end">
+                    <p class="small text-muted mb-1">Last Cheque</p>
+                    <p class="fs-7 fw-bold">'.$rowbanks['lastChequeno'].'</p>
+                </div>
+            </div>
+            ' . ($count < DB_num_rows($ResultIndex) ? '<hr class="my-2">' : '') . '
+        </div>';
+    }
+   
+    $lineecho .= '</div>';
+    return (DB_num_rows($ResultIndex) > 0) ? $lineecho : '<p class="text-muted">No bank accounts found</p>';
+}
+
+function GetMytacksModern(){
+    global $db;
+    
+    $sql = "SELECT * FROM `Tasks` LIMIT 10";
+    $result = DB_query($sql, $db);
+    
+    $lineecho = '';
+    if(DB_num_rows($result) > 0){
+        while($row = DB_fetch_array($result)){
+            $status = isset($row['Status']) ? $row['Status'] : '0';
+            $statusClass = ($status == '4') ? 'success' : 'warning';
+            $statusIcon = ($status == '4') ? 'check-circle' : 'hourglass-half';
+            
+            $lineecho .= '
+            <div class="task-item">
+                <div class="task-check">
+                    <i class="fas fa-'.$statusIcon.' text-'.$statusClass.'"></i>
+                </div>
+                <div class="task-info">
+                    <p class="task-title mb-1">'.$row['Taskname'].'</p>
+                    <p class="task-description small text-muted">'.$row['taskdetails'].'</p>
+                </div>
+            </div>';
+        }
+    } else {
+        $lineecho = '<p class="text-muted text-center py-2"><i class="fas fa-smile-wink"></i> No tasks yet. Great job!</p>';
+    }
+    
+    return $lineecho;
+}
+
+function GetMyActivitiesModern(){
+    global $db;
+    
+    $sql = "SELECT * FROM `NewActivity` LIMIT 10";
+    $result = DB_query($sql, $db);
+    
+    $lineecho = '';
+    if(DB_num_rows($result) > 0){
+        while($row = DB_fetch_array($result)){
+            $type = strtolower(trim($row['Activityname']));
+            
+            // Determine icon based on activity type
+            switch($type) {
+                case 'call':
+                    $typeIcon = 'phone';
+                    break;
+                case 'email':
+                    $typeIcon = 'envelope';
+                    break;
+                case 'meeting':
+                case 'sales':
+                    $typeIcon = 'users';
+                    break;
+                case 'note':
+                    $typeIcon = 'sticky-note';
+                    break;
+                default:
+                    $typeIcon = 'star';
+            }
+            
+            $lineecho .= '
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas fa-'.$typeIcon.'"></i>
+                </div>
+                <div class="activity-info">
+                    <p class="activity-title mb-1">'.$row['Activityname'].'</p>
+                    <p class="activity-description small text-muted">'.$row['taskdetails'].'</p>
+                    <p class="activity-date small text-muted-50">'.date('j M Y', strtotime($row['createdon'])).'</p>
+                </div>
+            </div>';
+        }
+    } else {
+        $lineecho = '<p class="text-muted text-center py-2"><i class="fas fa-check-double"></i> All caught up!</p>';
+    }
+    
+    return $lineecho;
+}
+ 

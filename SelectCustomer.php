@@ -6,6 +6,9 @@ $Title = _('Customer List');
 include('includes/header.inc');
 $thispage = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 
+if(isset($_GET['newsearch'])){
+    unset($_SESSION['Customeritemcode']);
+}
 $SalesmanArray=array();
 
 $result=DB_query("select code,salesman from salesrepsinfo",$db);    
@@ -17,11 +20,6 @@ while ($myrow = DB_fetch_array($result)) {
 if(isset($_GET['itemcode'])){
     $_SESSION['Customeritemcode']=$_GET['itemcode'];
 }
-
-if(isset($_GET['newsearch'])){
-    unset($_SESSION['Customeritemcode']);
-}
-
 if(isset($_SESSION['Customeritemcode'])){
     
         $ErrMsg = _('The customer name requested cannot be retrieved because');
@@ -110,7 +108,7 @@ echo '<table style="width: 67%; margin: 0 auto 2em auto;" cellspacing="0" cellpa
         . '<th>Unpaid Balance</th>'
         . '</tr></thead><tbody>';
       
-if(mb_strlen($_POST['salespersoncode'])>0){
+if(strlen($_POST['salespersoncode'])>0){
      $results=DB_query("Select 
                         itemcode,
                         customer,

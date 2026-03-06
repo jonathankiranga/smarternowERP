@@ -1,20 +1,5 @@
 <?php
 
-/**
- * Stock posting, FIFO costing and production GL functions
- * PHP 7.0+ / MySQL (mysqli) — converted from MS-SQL stored-procedure version.
- *
- * Key changes:
- *  - dropprocedure() removed entirely — no stored procedures used.
- *  - All CREATE PROCEDURE / cursor loops replaced with native PHP while loops
- *    executing direct MySQL queries.
- *  - MS-SQL string concat (+) replaced with MySQL CONCAT().
- *  - CAST(x AS varchar) replaced with CAST(x AS CHAR).
- *  - ISNULL() replaced with IFNULL().
- *  - DB_free_result() wrapper added.
- *  - `TABLE` column backtick-quoted (reserved word in MySQL).
- *  - GetStockRegister() cursor replaced with a set-based UPDATE JOIN.
- */
 
 $_SESSION['PostRow'] = array();
 $_SESSION['records'] = array();
@@ -22,18 +7,6 @@ $_SESSION['records'] = array();
 // ---------------------------------------------------------------------------
 // DB helper not present in original wrapper — added for completeness
 // ---------------------------------------------------------------------------
-
-/**
- * Free a mysqli result set.
- *
- * @param mysqli_result $result
- */
-function DB_free_result($result)
-{
-    if ($result instanceof mysqli_result) {
-        mysqli_free_result($result);
-    }
-}
 
 // ---------------------------------------------------------------------------
 // ExchangeRates class — unchanged logic, only DB calls updated via wrappers

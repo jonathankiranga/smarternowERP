@@ -12,8 +12,11 @@ if(isset($_GET['code'])){
 }
 
 if(isset($_POST['save'])){
-    DB_query(sprintf("Insert into `unit` (`code`,`descrip`) values ('%s','%s')",
-            $_POST['categoryid'],$_POST['categorydescription']), $db);
+    
+    $code = Triger_unit();
+    
+    DB_query(sprintf("Insert into `unit` (`code`,`descrip`) values ('%s','%s')", $code,$_POST['categorydescription']), $db);
+    
 }
 
 if(isset($_POST['edit'])){

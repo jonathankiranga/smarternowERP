@@ -26,12 +26,15 @@ if(isset($_POST['submit'])){
                 prnMsg('The vendor name '.$_POST['customer'].' already exists','warn');
             } else {
                                
+             $id =  Triger_creditors($descript);
+                
             $sql=sprintf("INSERT INTO `creditors`
-           (`contact` ,`vatregno` ,`customer`  ,`middlen`,`phone` ,`fax` ,`company`
+           (`itemcode`,`contact` ,`vatregno` ,`customer`  ,`middlen`,`phone` ,`fax` ,`company`
            ,`altcontact`,`email` ,`city` ,`country`,`inactive` ,`postcode` ,`curr_cod`,
            `supplierposting`,`firstn`) 
-           values ('%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s','%s'  ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' )",
-            $_POST['contact'] ,$_POST['vatregno'] ,$_POST['customer']  ,$_POST['middlen'],
+           values ('%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s','%s'  ,
+           '%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' ,'%s' )",
+            $id,$_POST['contact'] ,$_POST['vatregno'] ,$_POST['customer']  ,$_POST['middlen'],
             $_POST['phone'] ,$_POST['fax'] ,$_POST['company'],
             $_POST['altcontact'],$_POST['email'] , $_POST['city'] ,$_POST['country'], 
             $_POST['inactive'] ,$_POST['postcode'] ,$_POST['curr_cod'],

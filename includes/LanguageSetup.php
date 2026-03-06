@@ -3,7 +3,9 @@
 /* $Id: LanguageSetup.php 6488 2013-12-10 09:38:45Z daintree $ */
 
 /* Set internal character encoding to UTF-8 */
-mb_internal_encoding('UTF-8');
+if (function_exists('mb_internal_encoding')) {
+    mb_internal_encoding('UTF-8');
+}
 
 /* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
 to check for the existance of gettext function and setup the necessary enviroment to allow for automatic translation

@@ -1,11 +1,11 @@
 <?php
 include('includes/session.inc');
+require_once 'vendor/autoload.php';
 $Title = _('New Activity');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/CurrenciesArray.php');
 include('includes/CountriesArray.php');
-require_once 'includes/vendor/autoload.php';
 include('calendar/myGooglesettings.php');
 
 $mypage=htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8');

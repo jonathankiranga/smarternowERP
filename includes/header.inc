@@ -14,7 +14,6 @@
        <link href="'.$RootPath.'/javascripts/bootstrap.min.css" rel="stylesheet" type="text/css" />
        <link href="'.$RootPath.'/Datatables/jquery.dataTables.css" rel="stylesheet" type="text/css" />
        <link href="'.$RootPath.'/css/homepage.css" rel="stylesheet" type="text/css"/>
-       <link href="'.$RootPath.'/css/dashboard-improved.css" rel="stylesheet" type="text/css"/>
        <link href="'.$RootPath.'/css/smart-dialog.css" rel="stylesheet" type="text/css"/>'
      . '<link href="'.$RootPath.'/Datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
        <link href="'.$RootPath.'/Datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>

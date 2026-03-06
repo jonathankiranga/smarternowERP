@@ -1,5 +1,12 @@
 <?php
-/* $Id: session.inc 6338 2013-09-28 05:10:46Z daintree $*/
+
+ini_set('session.gc_maxlifetime', 3600);
+session_name('ErpWithCRM');
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if(!isset($PathPrefix)) {
     $PathPrefix='';
 }
@@ -9,7 +16,7 @@ if (!file_exists($PathPrefix . 'config.php')){
     if ($RootPath == '/' OR $RootPath == "\\") {
         $RootPath = '';
     }
-    header('Location:' . $RootPath . '/install/index.php');
+    header('Location:' . $RootPath . '/installer/index.php');
     exit;
 }
 
@@ -21,45 +28,35 @@ if (isset($dbuser)) {
     $DBType=$dbType;
 }
 
-if (isset($SessionSavePath)){
-  session_save_path($SessionSavePath);
-}
+
 
 if (!isset($SysAdminEmail)) {
     $SysAdminEmail='';
 }
 
-ini_set('session.gc_maxlifetime',$SessionLifeTime);
-
-if( !ini_get('safe_mode') ){
-    set_time_limit($MaximumExecutionTime);
-    ini_set('max_execution_time',$MaximumExecutionTime);
-}
-
-
-session_write_close(); //in case a previous session is not closed
-session_name('ErpWithCRM');
-session_start();
 
 include($PathPrefix . 'includes/ConnectDB.inc');
 include($PathPrefix . 'includes/DateFunctions.inc');
-// Load ODBC compatibility wrappers for legacy odbc_* usage
-if (file_exists($PathPrefix . 'includes/odbc_compat.php')){
-	include_once($PathPrefix . 'includes/odbc_compat.php');
+
+// Ensure FormID is always set for CSRF protection
+if (!isset($_SESSION['FormID'])) {
+	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
-if (!isset($_SESSION['AttemptsCounter']) OR $AllowDemoMode==true){
-	$_SESSION['AttemptsCounter'] = 0;
-}
+
 
 if (isset($_SESSION['DatabaseName'])){
     
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
+		// Skip FormID - it's a generated hash and should not be escaped
+		if ($PostVariableName === 'FormID') {
+			continue;
+		}
 		if (gettype($PostVariableValue) != 'array') {
-			$_POST[$PostVariableName] = DB_escape_string($PostVariableValue);
+			$_POST[$PostVariableName] = $PostVariableValue;
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
-				$PostVariableValue[$PostArrayKey] = DB_escape_string($PostArrayValue);
+				$PostVariableValue[$PostArrayKey] = $PostArrayValue;
 			}
 		}
 	}
@@ -74,7 +71,7 @@ if (isset($_SESSION['DatabaseName'])){
 	}
         
 } else { //set SESSION['FormID'] before the a user has even logged in
-	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
+	// FormID is now initialized earlier in the file
 }
 
 
@@ -101,9 +98,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		break;
 
 	case UL_SHOWLOGIN:
-            
-                if (odbc_error()) {testconnect();}
-
+         
 		include($PathPrefix . 'includes/Login.php');
 		exit;
 
@@ -265,7 +260,7 @@ if (!isset($PageSecurity)){
 }
 
 if (!isset($AllowAnyone)){
-	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
+	if (isset($_SESSION['AllowedPageSecurityTokens']) AND ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity)))) {
 		$Title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
 		echo '<tr><td class="menu_group_items">'
